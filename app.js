@@ -11,7 +11,8 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const app = express();
-
+//db
+const db = require('./helpers/db')();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
