@@ -6,11 +6,12 @@ const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const chatRouter = require('./routes/chat');
-
+const chat = require('./routes/chat');
+const redisStore = require('./helpers/redisStore');
 
 const dotenv = require('dotenv');
 dotenv.config();
+const redis = require('redis')
 
 const app = express();
 //db
@@ -28,9 +29,16 @@ app.use(express.static(path.join(__dirname, 'bower_components')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/chat', chatRouter);
+app.use('/chat', chat); 
 
-
+// express-session
+// app.use(session({
+// 	store: redisStore,
+// 	secret: process.env.SESSION_SECRET_KEY,
+// 	resave: false,
+// 	saveUninitialized: true,
+// 	cookie: { maxAge: 14 * 24 * 3600000  }
+// }));
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
